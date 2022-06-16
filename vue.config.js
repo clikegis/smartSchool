@@ -8,10 +8,13 @@ let cesiumWorkers = '../Build/Cesium/Workers'
 module.exports = {
   // 基本路径  3.6之前的版本时 baseUrl
   publicPath: "./",
+
   // 输出文件目录
   outputDir: "dist",
+
   // eslint-loader 是否在保存的时候检查
   lintOnSave: false,
+
   // webpack-dev-server 相关配置
   devServer: {
     open: process.platform === "darwin",
@@ -20,6 +23,7 @@ module.exports = {
     https: false,
     hotOnly: false
   },
+
   configureWebpack: {
     output: {
       sourcePrefix: ' '
@@ -47,5 +51,9 @@ module.exports = {
       unknownContextCritical: /^.\/.*$/,
       unknownContextCritical: false
     }
-  }
+  },
+
+  transpileDependencies: [
+    'vuetify'
+  ]
 };
