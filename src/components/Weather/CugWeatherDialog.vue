@@ -82,6 +82,8 @@
 
 <script>
 import eventBus from "../../utils/eventBus";
+import {mapState} from 'vuex'
+var Cesium = require('../../../node_modules/cesium/Source/Cesium.js');
 
 export default {
   name: "CugWeatherDialog",
@@ -97,9 +99,15 @@ export default {
       ],
     }
   },
+  computed:{
+    ...mapState(['viewer']),
+  },
   created() {
     eventBus.$on('makeWeatherShow',()=>{
       this.show=!this.show;
+      this.viewer.camera.flyTo({
+        destination: Cesium.Rectangle.fromDegrees(80, 22, 130, 55),
+      });
     })
   }
 }

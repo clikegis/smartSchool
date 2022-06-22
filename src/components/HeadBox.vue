@@ -2,7 +2,7 @@
   <v-container fluid>
     <div class="d-flex align-center">
       <v-img
-          alt="Vuetify Logo"
+          alt="smartSchool Logo"
           class="shrink mr-2"
           contain
           src='../assets/img/smartLogo.png'
