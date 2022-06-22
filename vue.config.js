@@ -21,7 +21,16 @@ module.exports = {
     host: "0.0.0.0",
     port: 8088,
     https: false,
-    hotOnly: false
+    hotOnly: false,
+    proxy:{
+      "/api":{
+        target:"http://43.142.141.106:9999/3dtiles/0111",
+        changeOrigin:true,
+        pathRewrite:{
+          '/api':''
+        }
+      }
+    }
   },
 
   configureWebpack: {

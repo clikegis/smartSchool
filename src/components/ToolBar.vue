@@ -91,6 +91,23 @@ export default {
             {title: '监控参数优化', icon: 'mdi-home-city'}
           ]
         },
+        {
+          title: '人员信息', icon: 'mdi-account',
+          subItems: [
+            {title: '人员管理', icon: 'mdi-account-cog'},
+            {title: '本科生来源', icon: 'mdi-account-arrow-left'},
+            {title: '毕业生流向', icon: 'mdi-account-arrow-right'},
+            {title: '导师信息', icon: 'mdi-account-school'}
+          ]
+        },
+        {
+          title: '实时校园', icon: 'mdi-alarm-check',
+          subItems: [
+            {title: '道路拥挤程度', icon: 'mdi-car-back'},
+            {title: '人流量', icon: 'mdi-account-group'},
+            {title: '活动管理', icon: 'mdi-dance-ballroom'}
+          ]
+        },
       ],
       mini:true
     }

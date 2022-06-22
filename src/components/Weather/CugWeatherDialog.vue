@@ -89,7 +89,7 @@ export default {
   name: "CugWeatherDialog",
   data () {
     return {
-      show:true,
+      show:false,
       labels: ['SU', 'MO', 'TU', 'WED', 'TH', 'FR', 'SA'],
       time: 0,
       forecast: [

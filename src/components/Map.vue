@@ -18,10 +18,12 @@ export default {
 
     mounted() {
         this.setViewer();
+        /* 加载校园3dTiles数据 */
+        this.load3DTiles();
     },
 
     methods: {
-        ...mapMutations(['setViewer']),
+        ...mapMutations(['setViewer','load3DTiles']),
     },
 };
 </script>
