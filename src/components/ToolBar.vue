@@ -94,18 +94,18 @@ export default {
         {
           title: '人员信息', icon: 'mdi-account',
           subItems: [
-            {title: '人员管理', icon: 'mdi-account-cog'},
-            {title: '本科生来源', icon: 'mdi-account-arrow-left'},
-            {title: '毕业生流向', icon: 'mdi-account-arrow-right'},
-            {title: '导师信息', icon: 'mdi-account-school'}
+            {title: '人员管理', icon: 'mdi-account-cog',id:'manage'},
+            {title: '本科生来源', icon: 'mdi-account-arrow-left',id:'origin'},
+            {title: '毕业生流向', icon: 'mdi-account-arrow-right',id:'flow'},
+            {title: '导师信息', icon: 'mdi-account-school',id:'teacher'}
           ]
         },
         {
-          title: '实时校园', icon: 'mdi-alarm-check',
+          title: '动态校园', icon: 'mdi-alarm-check',
           subItems: [
-            {title: '道路拥挤程度', icon: 'mdi-car-back'},
-            {title: '人流量', icon: 'mdi-account-group'},
-            {title: '活动管理', icon: 'mdi-dance-ballroom'}
+            {title: '道路拥挤程度', icon: 'mdi-car-back',id:'road'},
+            {title: '人流量', icon: 'mdi-account-group',id:'people'},
+            {title: '活动管理', icon: 'mdi-dance-ballroom',id:'activity'}
           ]
         },
       ],
@@ -120,6 +120,7 @@ export default {
           break;
         }
         default:
+          this.$bus.$emit('homeEvent',subItem.id);
           break;
       }
     }
