@@ -36,6 +36,10 @@
             ></PeopleTimeChange>
           </div>
         </transition>
+
+        <div class="HeatMapLabelContainer" v-if="currentFun == 'people'">
+          <HeatMapLabel></HeatMapLabel>
+        </div>
       </v-main>
     </v-app>
     <div id="heatMap" v-show="false"></div>
@@ -49,6 +53,7 @@ import ToolBar from "../../components/ToolBar";
 import CugWeatherDialog from "../../components/Weather/CugWeatherDialog";
 import TimeChange from "../../components/RealTimeSchool/TimeChange.vue";
 import PeopleTimeChange from "../../components/RealTimeSchool/PeopleTimeChange.vue";
+import HeatMapLabel from '../../components/RealTimeSchool/HeatMapLabel.vue';
 import { mapMutations } from "vuex";
 export default {
   name: "Home",
@@ -64,6 +69,7 @@ export default {
     Map,
     TimeChange,
     PeopleTimeChange,
+    HeatMapLabel
   },
   created() {
     this.$bus.$on("homeEvent", (currentFun) => {
@@ -175,5 +181,11 @@ export default {
   position: absolute;
   right: 3vw;
   top: 5vh;
+}
+/* 热力图标签 */
+.HeatMapLabelContainer{
+  position: absolute;
+  right: 3vw;
+  bottom: 5vh;
 }
 </style>
