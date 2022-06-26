@@ -27,8 +27,18 @@
             <TimeChange></TimeChange>
           </div>
         </transition>
+
+        <!-- 人流量 -->
+        <transition name="peopleTimeChangeContainerAni">
+          <div class="peopleTimeChangeContainer" v-if="currentFun == 'people'">
+            <PeopleTimeChange
+              @peopleTimeChange="peopleTimeChange"
+            ></PeopleTimeChange>
+          </div>
+        </transition>
       </v-main>
     </v-app>
+    <div id="heatMap" v-show="false"></div>
   </div>
 </template>
 
@@ -38,7 +48,8 @@ import HeadBox from "../../components/HeadBox";
 import ToolBar from "../../components/ToolBar";
 import CugWeatherDialog from "../../components/Weather/CugWeatherDialog";
 import TimeChange from "../../components/RealTimeSchool/TimeChange.vue";
-import { mapMutations } from 'vuex';
+import PeopleTimeChange from "../../components/RealTimeSchool/PeopleTimeChange.vue";
+import { mapMutations } from "vuex";
 export default {
   name: "Home",
   data() {
@@ -52,6 +63,7 @@ export default {
     HeadBox,
     Map,
     TimeChange,
+    PeopleTimeChange,
   },
   created() {
     this.$bus.$on("homeEvent", (currentFun) => {
@@ -63,29 +75,53 @@ export default {
       switch (currentFun) {
         case "road":
           //退出之前的功能
-          //....
+          this.destoryPrevious();
           this.currentFun = currentFun;
           //地图修改
-          this.addRoad("morning");
+          this.addRoad("lunch");
+          break;
+        case "people":
+          this.destoryPrevious();
+          this.currentFun = currentFun;
+          this.addPeopleHeatMap({
+            time: "morning",
+            dom: document.querySelector("#heatMap"),
+          });
           break;
         default:
           break;
       }
     });
   },
-  methods:{
-    ...mapMutations(["addRoad","destoryRoad"]),
-    destoryPrevious(){
-      switch (this.currentFun){
+  methods: {
+    ...mapMutations([
+      "addRoad",
+      "destoryRoad",
+      "addPeopleHeatMap",
+      "destoryPeopleEntity",
+    ]),
+    destoryPrevious() {
+      switch (this.currentFun) {
         case "road":
           this.destoryRoad();
+          this.currentFun = "";
+          break;
+        case "people":
+          this.destoryPeopleEntity();
           this.currentFun = "";
           break;
         default:
           break;
       }
-    }
-  }
+    },
+    peopleTimeChange(time) {
+      this.destoryPeopleEntity();
+      this.addPeopleHeatMap({
+        time: time,
+        dom: document.querySelector("#heatMap"),
+      });
+    },
+  },
 };
 </script>
 
@@ -127,5 +163,17 @@ export default {
 
 .timeChangeContainerAni-enter-to {
   opacity: 1;
+}
+
+#heatMap {
+  width: 400px;
+  height: 400px;
+}
+
+/* 人流量 */
+.peopleTimeChangeContainer {
+  position: absolute;
+  right: 3vw;
+  top: 5vh;
 }
 </style>

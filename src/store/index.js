@@ -1,5 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import h337 from "heatmap.js";
+import axios from "axios";
 
 var Cesium = require("../../node_modules/cesium/Source/Cesium.js");
 Vue.use(Vuex);
@@ -7,7 +9,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     viewer: null,
-    roadDS:null
+    postUrl: {
+      peopleUrl: "/json/people.json",
+    },
+    roadDS: null,
+    peopleEntity:null
   },
   mutations: {
     setViewer(state) {
@@ -74,7 +80,8 @@ export default new Vuex.Store({
         school.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
       });
     },
-    addRoad(state, time) {//加入道路
+    addRoad(state, time) {
+      //加入道路
       //先在视图中加入道路geojson数据
       let promise = Cesium.GeoJsonDataSource.load(
         "/geojson/roadsProj.geojson",
@@ -92,35 +99,126 @@ export default new Vuex.Store({
             attr = "morningjam";
             break;
           case "lunch":
-            attr="dinlunjam";
+            attr = "dinlunjam";
             break;
           case "dinner":
             attr = "nightjam";
             break;
           case "usual":
-            attr="usualjam";
+            attr = "usualjam";
             break;
         }
         //更改道路颜色
         let entities = dataSource.entities.values;
-        entities.forEach((entity,index)=>{
+        entities.forEach((entity, index) => {
           let jam = entity.properties[attr].valueOf();
-          switch(jam){
-            case 1:            
-              entity.polyline.material = new Cesium.Color(	60/255.0,179/255.0,113/255.0);
+          switch (jam) {
+            case 1:
+              entity.polyline.material = new Cesium.Color(
+                60 / 255.0,
+                179 / 255.0,
+                113 / 255.0
+              );
               break;
             case 2:
-              entity.polyline.material = new Cesium.Color(	255/255.0,140/255.0,0/255.0);
+              entity.polyline.material = new Cesium.Color(
+                255 / 255.0,
+                140 / 255.0,
+                0 / 255.0
+              );
               break;
             case 3:
-              entity.polyline.material = new Cesium.Color(1.0,0.0,0.0);
+              entity.polyline.material = new Cesium.Color(1.0, 0.0, 0.0);
               break;
           }
         });
       });
     },
-    destoryRoad(state){
+    destoryRoad(state) {
       state.viewer.dataSources.remove(state.roadDS);
+    },
+    async addPeopleHeatMap(state, { time, dom }) {
+      //人流量热力图
+      let res = await axios.get(state.postUrl.peopleUrl);
+      let people = res.data;
+      /* 处理数据 */
+      let dataRaw = [];
+      people.forEach((person) => {
+        if(person[`${time}Not`]=="0") return;
+        dataRaw.push({
+          lat: parseFloat(person.POINT_Y),
+          lon: parseFloat(person.POINT_X),
+          value: person[`${time}value`],
+        });
+      });
+      /* 初始化热力图设置 */
+      // 设置随机数据点数量
+      let len = dataRaw.length;
+      // 构建随机数据点
+      let points = [];
+      // 设置最大值
+      let max = 300;
+      // 设置热力图宽度和高度
+      let width = 400;
+      let height = 400;
+      // 设置纬度最低点和最高点
+      let latMin = 30.457;
+      let latMax = 30.463;
+      // 设置经度最低点和最高点
+      let lonMin = 114.609;
+      let lonMax = 114.618;
+      // 将每个点的元素（属性？）转换为创建h337对象即热力图实例所需的数据格式
+      for (let i = 0; i < len; i++) {
+        // 传进原始数据
+        let dataItem = dataRaw[i];
+        let point = {
+          // 将数据点经纬度等比例设置成矩形中的x y坐标 值为原始数据的值
+          x: Math.floor(((dataItem.lat - latMin) / (latMax - latMin)) * width),
+          y: Math.floor(((dataItem.lon - lonMin) / (lonMax - lonMin)) * height),
+          value: dataItem.value,
+        };
+        // 比较设置的最大值和原始数据值大小 取两者间的最大值
+        max = Math.max(max, dataItem.value);
+        // 将转换好后的数据存入数组
+        points.push(point);
+      }
+      // 创建热力图实例
+      let heatMapInstance = h337.create({
+        container: dom,
+      });
+      // 设置传入实例的数据
+      let data = {
+        max: max,
+        data: points,
+      };
+      // 新建热力图实例并传入设置好的数据
+      heatMapInstance.setData(data);
+      /* 把热力图铺到地球上 */
+      // 设置画布为生成的热力图
+      let canvas = document.getElementsByClassName("heatmap-canvas");
+      // 控制台输出画布数据
+      // 添加热力图实例
+      state.peopleEntity = state.viewer.entities.add({
+        name: "heatmap",
+        // 设置矩形
+        rectangle: {
+          // 指定矩形区域
+          coordinates: Cesium.Rectangle.fromDegrees(
+            lonMin,
+            latMin,
+            lonMax,
+            latMax
+          ),
+          // 设置矩形图片为据透明度的热力图
+          material: new Cesium.ImageMaterialProperty({
+            image: canvas[0],
+            transparent: true,
+          }),
+        },
+      });
+    },
+    destoryPeopleEntity(state){
+      state.viewer.entities.remove(state.peopleEntity);
     }
   },
   actions: {},
