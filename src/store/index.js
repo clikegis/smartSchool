@@ -2,18 +2,25 @@ import Vue from "vue";
 import Vuex from "vuex";
 import h337 from "heatmap.js";
 import axios from "axios";
-
-var Cesium = require("../../node_modules/cesium/Source/Cesium.js");
+const Cesium = require("../../node_modules/cesium/Source/Cesium.js");
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     viewer: null,
+    handler: null,
     postUrl: {
       peopleUrl: "/json/people.json",
     },
     roadDS: null,
-    peopleEntity:null
+    peopleEntity: null,
+    options: {
+      buffer: false,
+      limitHeight: false,
+      sight: false,
+      visibility: false,
+      digTerrain: false
+    }
   },
   mutations: {
     setViewer(state) {
@@ -36,8 +43,10 @@ export default new Vuex.Store({
         sceneMode: 3, // 初始场景模式 1：2D 2：2D循环 3：3D，默认3
         // 如场景中的元素没有随仿真时间变化，请考虑将设置maximumRenderTimeChange为较高的值，例如Infinity
         maximumRenderTimeChange: Infinity,
+        terrainProvider: new Cesium.EllipsoidTerrainProvider()
       });
       state.viewer.cesiumWidget.creditContainer.style.display = "none"; //隐藏ceisum标识
+      state.handler = new Cesium.ScreenSpaceEventHandler(state.viewer.canvas);
     },
     load3DTiles(state) {
       //加载3dtiles模型
@@ -56,8 +65,6 @@ export default new Vuex.Store({
         );
         state.viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
 
-        //调整模型高度
-        var heightOffset = -10.0;
         var cartographic = Cesium.Cartographic.fromCartesian(
           boundingSphere.center
         );
@@ -70,7 +77,7 @@ export default new Vuex.Store({
         var offset = Cesium.Cartesian3.fromRadians(
           cartographic.longitude,
           cartographic.latitude,
-          heightOffset
+            -cartographic.height + 40
         );
         var translation = Cesium.Cartesian3.subtract(
           offset,
@@ -219,6 +226,19 @@ export default new Vuex.Store({
     },
     destoryPeopleEntity(state){
       state.viewer.entities.remove(state.peopleEntity);
+    },
+    initOptions(state, id){
+      state.viewer.entities.removeAll();
+      state.viewer.scene.postProcessStages.removeAll();
+      if(state.options[id])
+      {
+        state.options[id] = !state.options[id]
+        return
+      }
+      Object.keys(state.options).forEach((item) => {
+        state.options[item] = false
+      })
+      state.options[id] = true;
     }
   },
   actions: {},
