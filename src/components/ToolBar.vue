@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
     <v-navigation-drawer
             v-model="drawer"
             :mini-variant.sync="mini"
@@ -18,7 +17,6 @@
             >
                 <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
-=======
   <v-navigation-drawer v-model="drawer" :mini-variant.sync="mini" permanent>
     <v-list-item class="px-2">
       <v-list-item-avatar>
@@ -65,7 +63,6 @@
           <v-list-item-icon>
             <v-icon>{{ subItem.icon }}</v-icon>
           </v-list-item-icon>
->>>>>>> origin/master
         </v-list-item>
 
         <v-divider></v-divider>
@@ -104,7 +101,6 @@
 </template>
 
 <script>
-<<<<<<< HEAD
     import { mapMutations } from 'vuex'
     import eventBus from "../utils/eventBus";
 
@@ -205,7 +201,6 @@
             }
         }
     }
-=======
 import eventBus from "../utils/eventBus";
 export default {
   name: "ToolBar",
@@ -300,7 +295,6 @@ export default {
     });
   },
 };
->>>>>>> origin/master
 </script>
 
 <style scoped>

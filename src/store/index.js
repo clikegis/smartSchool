@@ -2,13 +2,9 @@ import Vue from "vue";
 import Vuex from "vuex";
 import h337 from "heatmap.js";
 import axios from "axios";
-<<<<<<< HEAD
 const Cesium = require("../../node_modules/cesium/Source/Cesium.js");
-=======
 import addActivityInViewer from "../utils/addActivityInViewer";
 
-var Cesium = require("../../node_modules/cesium/Source/Cesium.js");
->>>>>>> origin/master
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -21,17 +17,14 @@ export default new Vuex.Store({
     },
     roadDS: null,
     peopleEntity: null,
-<<<<<<< HEAD
     options: {
       buffer: false,
       limitHeight: false,
       sight: false,
       visibility: false,
       digTerrain: false
-    }
-=======
+    },
     activityEntities: [],
->>>>>>> origin/master
   },
   mutations: {
     setViewer(state) {
@@ -54,11 +47,8 @@ export default new Vuex.Store({
         sceneMode: 3, // 初始场景模式 1：2D 2：2D循环 3：3D，默认3
         // 如场景中的元素没有随仿真时间变化，请考虑将设置maximumRenderTimeChange为较高的值，例如Infinity
         maximumRenderTimeChange: Infinity,
-<<<<<<< HEAD
-        terrainProvider: new Cesium.EllipsoidTerrainProvider()
-=======
+        terrainProvider: new Cesium.EllipsoidTerrainProvider(),
         infoBox:false
->>>>>>> origin/master
       });
       state.viewer.cesiumWidget.creditContainer.style.display = "none"; //隐藏ceisum标识
       state.handler = new Cesium.ScreenSpaceEventHandler(state.viewer.canvas);
@@ -242,7 +232,6 @@ export default new Vuex.Store({
     destoryPeopleEntity(state) {
       state.viewer.entities.remove(state.peopleEntity);
     },
-<<<<<<< HEAD
     initOptions(state, id){
       state.viewer.entities.removeAll();
       state.viewer.scene.postProcessStages.removeAll();
@@ -255,7 +244,7 @@ export default new Vuex.Store({
         state.options[item] = false
       })
       state.options[id] = true;
-=======
+    },
     async addActivity(state,{bus}) {
       //在地图中增加标注点
       //获取活动数据
@@ -326,7 +315,6 @@ export default new Vuex.Store({
         state.viewer.entities.remove(entity);
       }
       state.activityEntities = [];
->>>>>>> origin/master
     }
   },
   actions: {},
