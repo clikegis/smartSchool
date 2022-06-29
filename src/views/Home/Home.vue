@@ -428,6 +428,9 @@
                 <v-btn color="blue darken-1" text @click="userInfoShow = false">
                   取消
                 </v-btn>
+                <v-btn color="error" text @click="exitLogin()">
+                  退出登录
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -487,7 +490,7 @@ export default {
       currentId: "",
       formLogin: false,
       userForm: {
-        id:'',
+        id: "",
         username: "1",
         password: "2",
         sexy: "3",
@@ -498,7 +501,7 @@ export default {
       },
       logSuccess: false,
       userInfoShow: false,
-      userInfoChangeSuccess:false
+      userInfoChangeSuccess: false,
     };
   },
   components: {
@@ -663,19 +666,33 @@ export default {
     showUserInfo() {
       this.userInfoShow = true;
     },
-    submitChange(){
+    submitChange() {
       //向数据库提交修改
       //...
       let success = true;
-      if(success){
+      if (success) {
         this.userInfoShow = false;
         this.userInfoChangeSuccess = true;
-        setTimeout(()=>{
+        setTimeout(() => {
           this.userInfoChangeSuccess = false;
-      } ,2000);
-      }else{
+        }, 2000);
+      } else {
         alert("提交失败");
       }
+    },
+    exitLogin(){//退出登录
+      this.$bus.$emit('exitLogin');
+      this.userInfoShow = false;
+      this.userForm = {
+        id: "",
+        username: "",
+        password: "",
+        sexy: "",
+        phone: "",
+        grade: "",
+        name: "",
+        position: "",
+      };
     }
   },
   mounted() {
