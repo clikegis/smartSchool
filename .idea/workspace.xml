@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:master" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="05f57a43-87b6-4556-8492-ed026797220a" name="Default Changelist" comment="地理分析、拖拽等功能实现 ---陈柏舟">
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Vue Single File Component" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="hiddenUrls">
+      <set>
+        <option value="https://github.com/clikegis/smartSchool.git" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="2BC7Tbp3MNO2b7IugE05Wer5xbn" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/img" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\20606\Desktop\课程\三维GIS原理与应用\smartSchool\public\img" />
+      <recent name="C:\Users\20606\Desktop\课程\三维GIS原理与应用\smartSchool\src\utils" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="05f57a43-87b6-4556-8492-ed026797220a" name="Default Changelist" comment="" />
+      <created>1656398222058</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1656398222058</updated>
+      <workItem from="1656398230779" duration="30537000" />
+      <workItem from="1656478504003" duration="259000" />
+    </task>
+    <task id="LOCAL-00001" summary="地理分析、拖拽等功能实现 ---陈柏舟">
+      <created>1656477018204</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1656477018204</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="地理分析、拖拽等功能实现 ---陈柏舟" />
+    <option name="LAST_COMMIT_MESSAGE" value="地理分析、拖拽等功能实现 ---陈柏舟" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="276" y="148" key="MergeDialog" timestamp="1656477440504">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="276" y="148" key="MergeDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1656477440504" />
+    <state x="1164" y="565" width="427" height="269" key="MultipleFileMergeDialog" timestamp="1656477441734">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1164" y="565" width="427" height="269" key="MultipleFileMergeDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1656477441734" />
+    <state x="871" y="432" key="Vcs.Push.Dialog.v2" timestamp="1656477359273">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="871" y="432" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1656477359273" />
+    <state x="1072" y="612" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1656477382610">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1072" y="612" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1400@0.0.2560.1400" timestamp="1656477382610" />
+    <state x="982" y="262" width="596" height="876" key="find.popup" timestamp="1656473398071">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="982" y="262" width="596" height="876" key="find.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1656473398071" />
+  </component>
+</project>
