@@ -98,14 +98,9 @@ export default {
           subItems: [
             { title: "人员管理", icon: "mdi-account-cog", id: "manage" },
             {
-              title: "本科生来源",
+              title: "生源信息",
               icon: "mdi-account-arrow-left",
               id: "origin",
-            },
-            {
-              title: "毕业生流向",
-              icon: "mdi-account-arrow-right",
-              id: "flow",
             },
             { title: "导师信息", icon: "mdi-account-school", id: "teacher" },
           ],
@@ -139,6 +134,8 @@ export default {
       //登录
       if (!this.hasLogin) {
         this.$emit("log");
+      }else{
+        this.$emit("showUserInfo");
       }
     },
   },

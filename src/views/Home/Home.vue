@@ -14,7 +14,8 @@
         </div>
 
         <!--   系统工具栏     -->
-        <ToolBar @log="formLogin = true"> </ToolBar>
+        <ToolBar @log="formLogin = true" @showUserInfo="showUserInfo">
+        </ToolBar>
 
         <!--   天气容器     -->
         <div class="WeatherContainer">
@@ -351,6 +352,100 @@
             <strong>登录成功</strong>
           </v-snackbar>
         </v-row>
+
+        <!-- 用户信息展示框 -->
+        <v-row justify="center">
+          <v-dialog v-model="userInfoShow" persistent max-width="600px">
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">用户信息</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6">
+                      <v-text-field
+                        label="用户名"
+                        disabled
+                        v-model="userForm.username"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6">
+                      <v-text-field
+                        label="密码"
+                        v-model="userForm.password"
+                        type="password"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6">
+                      <v-text-field
+                        label="真实姓名"
+                        disabled
+                        v-model="userForm.name"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6">
+                      <v-text-field
+                        label="性别"
+                        disabled
+                        v-model="userForm.sexy"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6">
+                      <v-text-field
+                        label="电话"
+                        v-model="userForm.phone"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6">
+                      <v-text-field
+                        label="年级"
+                        required
+                        v-model="userForm.grade"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12">
+                      <v-text-field
+                        label="住宿地址"
+                        required
+                        v-model="userForm.position"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="submitChange">
+                  提交
+                </v-btn>
+                <v-btn color="blue darken-1" text @click="userInfoShow = false">
+                  取消
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
+
+        <!-- 修改成功提示 -->
+        <v-row v-if="userInfoChangeSuccess">
+          <v-snackbar
+            :value="true"
+            absolute
+            top
+            color="success"
+            outlined
+            centered
+          >
+            <strong>修改成功</strong>
+          </v-snackbar>
+        </v-row>
       </v-main>
     </v-app>
     <div id="heatMap" v-show="false"></div>
@@ -392,10 +487,18 @@ export default {
       currentId: "",
       formLogin: false,
       userForm: {
-        username: "",
-        password: "",
+        id:'',
+        username: "1",
+        password: "2",
+        sexy: "3",
+        phone: "4",
+        grade: "5",
+        name: "5",
+        position: "f",
       },
       logSuccess: false,
+      userInfoShow: false,
+      userInfoChangeSuccess:false
     };
   },
   components: {
@@ -542,13 +645,9 @@ export default {
         //登录成功
         this.logSuccess = true;
         this.formLogin = false;
-        this.userForm = {
-          username: "",
-          password: "",
-        };
 
         //通知子组件
-        this.$bus.$emit("loginSuccess",name);
+        this.$bus.$emit("loginSuccess", name);
         setTimeout(() => {
           this.logSuccess = false;
         }, 2000);
@@ -561,6 +660,23 @@ export default {
         };
       }
     },
+    showUserInfo() {
+      this.userInfoShow = true;
+    },
+    submitChange(){
+      //向数据库提交修改
+      //...
+      let success = true;
+      if(success){
+        this.userInfoShow = false;
+        this.userInfoChangeSuccess = true;
+        setTimeout(()=>{
+          this.userInfoChangeSuccess = false;
+      } ,2000);
+      }else{
+        alert("提交失败");
+      }
+    }
   },
   mounted() {
     this.$bus.$on("askDialogShow", ({ position }) => {
