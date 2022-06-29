@@ -2,8 +2,10 @@ import Vue from "vue";
 import Vuex from "vuex";
 import h337 from "heatmap.js";
 import axios from "axios";
+
+// import addActivityInViewer from "../utils/addActivityInViewer";
+
 const Cesium = require("../../node_modules/cesium/Source/Cesium.js");
-import addActivityInViewer from "../utils/addActivityInViewer";
 
 Vue.use(Vuex);
 
@@ -289,32 +291,32 @@ export default new Vuex.Store({
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     },
     addSingleActivity(state,activity){//增加活动
-      let entity = addActivityInViewer(
-        parseInt(activity.type),
-        activity.name,
-        activity.id,
-        parseFloat(activity.longitude),
-        parseFloat(activity.latitude)
-      );
-      state.activityEntities.push(entity);
-      state.viewer.entities.add(entity);
+      // let entity = addActivityInViewer(
+      //   parseInt(activity.type),
+      //   activity.name,
+      //   activity.id,
+      //   parseFloat(activity.longitude),
+      //   parseFloat(activity.latitude)
+      // );
+      // state.activityEntities.push(entity);
+      // state.viewer.entities.add(entity);
     },
     deleteSingleActivity(state,{entity,id}){
-      state.activityEntities = state.activityEntities.filter((hasEntity)=>{
-        if(hasEntity.id == id){
-          return false;
-        }else{
-          return true;
-        }
-      });
-      state.viewer.entities.remove(entity);
+      // state.activityEntities = state.activityEntities.filter((hasEntity)=>{
+      //   if(hasEntity.id == id){
+      //     return false;
+      //   }else{
+      //     return true;
+      //   }
+      // });
+      // state.viewer.entities.remove(entity);
     },
     destoryActivity(state){
-      //移除所有活动
-      for(let entity of state.activityEntities){
-        state.viewer.entities.remove(entity);
-      }
-      state.activityEntities = [];
+      // //移除所有活动
+      // for(let entity of state.activityEntities){
+      //   state.viewer.entities.remove(entity);
+      // }
+      // state.activityEntities = [];
     }
   },
   actions: {},

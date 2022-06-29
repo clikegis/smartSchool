@@ -1,4 +1,4 @@
-var Cesium = require("../../node_modules/cesium/Source/Cesium.js");
+const Cesium = require("../../node_modules/cesium/Source/Cesium.js");
 
 export default (type, name,id,longitude, latitude) => {
   let color;
