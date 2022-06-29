@@ -3,6 +3,8 @@ import Vuex from "vuex";
 import h337 from "heatmap.js";
 import axios from "axios";
 const Cesium = require("../../node_modules/cesium/Source/Cesium.js");
+import addActivityInViewer from "../utils/addActivityInViewer";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -11,6 +13,7 @@ export default new Vuex.Store({
     handler: null,
     postUrl: {
       peopleUrl: "/json/people.json",
+      activityUrl: "/json/activity.json",
     },
     roadDS: null,
     peopleEntity: null,
@@ -20,7 +23,8 @@ export default new Vuex.Store({
       sight: false,
       visibility: false,
       digTerrain: false
-    }
+    },
+    activityEntities: [],
   },
   mutations: {
     setViewer(state) {
@@ -43,7 +47,8 @@ export default new Vuex.Store({
         sceneMode: 3, // 初始场景模式 1：2D 2：2D循环 3：3D，默认3
         // 如场景中的元素没有随仿真时间变化，请考虑将设置maximumRenderTimeChange为较高的值，例如Infinity
         maximumRenderTimeChange: Infinity,
-        terrainProvider: new Cesium.EllipsoidTerrainProvider()
+        terrainProvider: new Cesium.EllipsoidTerrainProvider(),
+        infoBox:false
       });
       state.viewer.cesiumWidget.creditContainer.style.display = "none"; //隐藏ceisum标识
       state.handler = new Cesium.ScreenSpaceEventHandler(state.viewer.canvas);
@@ -151,7 +156,7 @@ export default new Vuex.Store({
       /* 处理数据 */
       let dataRaw = [];
       people.forEach((person) => {
-        if(person[`${time}Not`]=="0") return;
+        if (person[`${time}Not`] == "0") return;
         dataRaw.push({
           lat: parseFloat(person.POINT_Y),
           lon: parseFloat(person.POINT_X),
@@ -224,7 +229,7 @@ export default new Vuex.Store({
         },
       });
     },
-    destoryPeopleEntity(state){
+    destoryPeopleEntity(state) {
       state.viewer.entities.remove(state.peopleEntity);
     },
     initOptions(state, id){
@@ -239,6 +244,77 @@ export default new Vuex.Store({
         state.options[item] = false
       })
       state.options[id] = true;
+    },
+    async addActivity(state,{bus}) {
+      //在地图中增加标注点
+      //获取活动数据
+      let res = await axios.get(state.postUrl.activityUrl);
+      let activities = res.data;
+
+      //将活动添加到地图上
+      for (let activity of activities) {
+        let entity = addActivityInViewer(
+          parseInt(activity.type),
+          activity.name,
+          activity.id,
+          parseFloat(activity.longitude),
+          parseFloat(activity.latitude)
+        );
+        state.activityEntities.push(entity);
+        state.viewer.entities.add(entity);
+      }
+
+      //绑定鼠标左键事件
+      let handler = new Cesium.ScreenSpaceEventHandler(state.viewer.canvas); //获取地图对象
+      handler.setInputAction((event) => {
+        //设置监听方法
+        var pick = state.viewer.scene.pick(event.position);
+        if (!pick || !(pick.id instanceof Cesium.Entity) || !state.viewer.entities.contains(pick.id)) {
+          //询问是否添加事件
+          var cartesian=state.viewer.camera.pickEllipsoid(event.position,state.viewer.scene.globe.ellipsoid);
+          var cartographic=Cesium.Cartographic.fromCartesian(cartesian);
+          var lat=Cesium.Math.toDegrees(cartographic.latitude);
+          var lng=Cesium.Math.toDegrees(cartographic.longitude);
+          bus.$emit('askDialogShow',{position:[lng,lat]});
+        }
+      }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
+
+      handler.setInputAction((event) => {
+        //设置监听方法
+        var pick = state.viewer.scene.pick(event.position);
+        if (Cesium.defined(pick) && pick.id instanceof Cesium.Entity && state.viewer.entities.contains(pick.id)) {
+          //弹出是否删除事件
+          bus.$emit('deleteDialogShow',{id:pick.id});
+        }
+      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    },
+    addSingleActivity(state,activity){//增加活动
+      let entity = addActivityInViewer(
+        parseInt(activity.type),
+        activity.name,
+        activity.id,
+        parseFloat(activity.longitude),
+        parseFloat(activity.latitude)
+      );
+      state.activityEntities.push(entity);
+      state.viewer.entities.add(entity);
+    },
+    deleteSingleActivity(state,{entity,id}){
+      state.activityEntities = state.activityEntities.filter((hasEntity)=>{
+        if(hasEntity.id == id){
+          return false;
+        }else{
+          return true;
+        }
+      });
+      state.viewer.entities.remove(entity);
+    },
+    destoryActivity(state){
+      //移除所有活动
+      for(let entity of state.activityEntities){
+        state.viewer.entities.remove(entity);
+      }
+      state.activityEntities = [];
     }
   },
   actions: {},

@@ -2,7 +2,7 @@
     <div class="heatMapLabel">
         <div class="label">300</div>
         <div class="canvasContainer">
-            <canvas width="50" height="200" id="colorStrip"></canvas>
+            <canvas width="30" height="200" id="colorStrip"></canvas>
         </div>
         <div class="label">1</div>
     </div>
@@ -44,6 +44,7 @@ export default {
 }
 
 .canvasContainer{
+    padding-left: 10px;
     width: 50px;
     height: 200px;
 }
